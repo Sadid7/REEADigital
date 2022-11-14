@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">REEA Digital</string>
+    <string name="home_icon_name">HOME</string>
+    <string name="map_icon_name">MAP</string>
+    <string name="menu_icon_name">MENU</string>
+    <string name="error_message_title">Error Occurred</string>
+    <string name="retry_button_name">Retry</string>
 </resources>
