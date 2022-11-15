@@ -7,4 +7,5 @@
     <string name="retry_button_name">Retry</string>
     <string name="movie_list">Movie List</string>
     <string name="map">Map</string>
+    <string name="data_fetch_message">Fetching User Data</string>
 </resources>

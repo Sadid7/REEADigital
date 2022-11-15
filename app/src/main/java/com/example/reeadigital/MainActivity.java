@@ -23,16 +23,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_layout);
+        setupNavigationBar();
+        //setAppbarConfigWithDestinations();
+
+    }
+    private void setupNavigationBar(){
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment);
         navController = navHostFragment.getNavController();
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         NavigationUI.setupWithNavController(bottomNav, navController);
-        //setAppbarConfigWithDestinations();
-        //NavigationUI.setupActionBarWithNavController(this, navController,appBarConfiguration);
     }
 
-/*    private void setAppbarConfigWithDestinations() {
+    private void setAppbarConfigWithDestinations() {
 
         Set<Integer> topLevelDestinations = new HashSet<>();
         topLevelDestinations.add(R.id.mapScreen);
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         appBarConfiguration = new AppBarConfiguration.Builder(topLevelDestinations)
                 .setDrawerLayout(new DrawerLayout(this))
                 .build();
-    }*/
+        NavigationUI.setupActionBarWithNavController(this, navController,appBarConfiguration);
+    }
 
 }
