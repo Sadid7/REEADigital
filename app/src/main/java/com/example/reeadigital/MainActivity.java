@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         //NavigationUI.setupActionBarWithNavController(this, navController,appBarConfiguration);
     }
 
-    private void setAppbarConfigWithDestinations() {
+/*    private void setAppbarConfigWithDestinations() {
 
         Set<Integer> topLevelDestinations = new HashSet<>();
         topLevelDestinations.add(R.id.mapScreen);
@@ -40,6 +40,6 @@ public class MainActivity extends AppCompatActivity {
         appBarConfiguration = new AppBarConfiguration.Builder(topLevelDestinations)
                 .setDrawerLayout(new DrawerLayout(this))
                 .build();
-    }
+    }*/
 
 }
