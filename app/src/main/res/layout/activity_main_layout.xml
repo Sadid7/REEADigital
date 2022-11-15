@@ -8,9 +8,12 @@
     tools:context=".MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/nav_host_fragment">
+        android:layout_height="wrap_content"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:defaultNavHost="true"
+        android:layout_width="match_parent"
+        android:id="@+id/nav_host_fragment"
+        app:navGraph="@navigation/nav_graph">
     </androidx.fragment.app.FragmentContainerView>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"

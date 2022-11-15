@@ -5,4 +5,6 @@
     <string name="menu_icon_name">MENU</string>
     <string name="error_message_title">Error Occurred</string>
     <string name="retry_button_name">Retry</string>
+    <string name="movie_list">Movie List</string>
+    <string name="map">Map</string>
 </resources>

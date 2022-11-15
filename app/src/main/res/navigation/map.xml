@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/map"
+    app:startDestination="@id/mapScreen">
+    <fragment
+        android:id="@+id/mapScreen"
+        android:name="com.example.reeadigital.map.MapScreen"
+        android:label="@string/map"
+        tools:layout="@layout/fragment_map_screen">
+    </fragment>
+</navigation>
