@@ -1,4 +1,4 @@
-package com.example.reeadigital.list;
+package com.example.reeadigital.list.model;
 
 import com.google.gson.annotations.SerializedName;
 

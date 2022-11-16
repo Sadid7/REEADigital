@@ -1,4 +1,4 @@
-package com.example.reeadigital.list;
+package com.example.reeadigital.list.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -10,7 +10,6 @@ public class MovieApiResponse {
     private Integer pageNo;
     @SerializedName("results")
     private List<Movie> movieList = null;
-
     @SerializedName("total_pages")
     private Integer totalPages;
 

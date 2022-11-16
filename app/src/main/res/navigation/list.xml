@@ -6,7 +6,7 @@
     app:startDestination="@+id/listScreen">
     <fragment
         android:id="@+id/listScreen"
-        android:name="com.example.reeadigital.list.MovieListFragment"
+        android:name="com.example.reeadigital.list.view.MovieListFragment"
         android:label="@string/movie_list"
         tools:layout="@layout/fragment_movie_list_layout">
     </fragment>

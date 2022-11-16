@@ -1,15 +1,13 @@
 package com.example.reeadigital;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.reeadigital.apiCall.RetrofitClientInstance;
 import com.example.reeadigital.apiCall.GetMovieLIstService;
-import com.example.reeadigital.list.Movie;
-import com.example.reeadigital.list.MovieApiResponse;
+import com.example.reeadigital.list.model.Movie;
+import com.example.reeadigital.list.model.MovieApiResponse;
 
 import java.util.List;
 
@@ -18,10 +16,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Repository implements Callback<MovieApiResponse>{
-    MutableLiveData<List<Movie>> movieListData;
+    MutableLiveData<List<Movie>> allMovieListData;
+    MovieApiResponse currentMovieApiResponse;
 
     public Repository() {
-        this.movieListData  = new MutableLiveData<>();
+        this.allMovieListData = new MutableLiveData<>();
+        this.currentMovieApiResponse = new MovieApiResponse();
     }
 
     public MutableLiveData<List<Movie>> requestMovieListData(String language, String pageNo) {
@@ -30,11 +30,18 @@ public class Repository implements Callback<MovieApiResponse>{
         Call<MovieApiResponse> call = service.getMovieList(Utils.apiKey,
                 "en-US","4");
         call.enqueue(this);
-        return movieListData;
+        return allMovieListData;
     }
 
-    public MutableLiveData<List<Movie>> getMovieListData() {
-        return movieListData;
+    public MutableLiveData<List<Movie>> getAllMovieListData() {
+        return allMovieListData;
+    }
+
+    public Integer getTotalPageNo() {
+        return currentMovieApiResponse.getTotalPages();
+    }
+    public Integer getCurrentPageNo() {
+        return currentMovieApiResponse.getPageNo();
     }
 
 /*    private String getApiKeyFromSharedPref() {
@@ -47,14 +54,18 @@ public class Repository implements Callback<MovieApiResponse>{
     public void onResponse(Call<MovieApiResponse> call, Response<MovieApiResponse> response) {
         Log.e("Sabid", response.code()+"");
         Log.e("Sabid",    response.body().getMovieList().get(0).getMovieDetails());
-
-        movieListData.setValue(response.body().getMovieList());
+        currentMovieApiResponse = response.body();
+        if (allMovieListData.getValue() == null) {
+            allMovieListData.setValue(response.body().getMovieList());
+        } else {
+            allMovieListData.getValue().addAll(response.body().getMovieList());
+        }
     }
 
     @Override
     public void onFailure(Call<MovieApiResponse> call, Throwable t) {
         Log.e("Sabid", t.getLocalizedMessage());
-        movieListData.setValue(null);
+        allMovieListData.setValue(null);
         //Failure Messsage
     }
 }

@@ -1,11 +1,10 @@
-package com.example.reeadigital.list;
-
-import android.content.Context;
+package com.example.reeadigital.list.viewmodel;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.reeadigital.Repository;
+import com.example.reeadigital.list.model.Movie;
 
 import java.util.List;
 
@@ -23,6 +22,6 @@ public class MovieListViewModel extends ViewModel {
     }
 
     public MutableLiveData<List<Movie>> getMovieList() {
-        return repository.getMovieListData();
+        return repository.getAllMovieListData();
     }
 }

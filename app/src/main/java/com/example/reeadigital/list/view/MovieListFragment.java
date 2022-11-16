@@ -1,7 +1,8 @@
-package com.example.reeadigital.list;
+package com.example.reeadigital.list.view;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.reeadigital.R;
 import com.example.reeadigital.Utils;
+import com.example.reeadigital.list.viewmodel.MovieListViewModel;
+import com.example.reeadigital.list.model.Movie;
 
 import java.util.List;
 
@@ -62,6 +65,7 @@ public class MovieListFragment extends Fragment implements Observer<List<Movie>>
     }
     private void generateMovieList(List<Movie> movieApiResponse) {
 
+        Log.e("MovieLIstFrag", movieApiResponse.get(0).getMovieDetails());
     }
 
 }
