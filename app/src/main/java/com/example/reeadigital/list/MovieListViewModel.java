@@ -16,7 +16,7 @@ public class MovieListViewModel extends ViewModel {
         repository = new Repository(context);
     }
 
-    public MutableLiveData<List<Movie>> getTasks() {
-        return repository.getTasks();
+    public MutableLiveData<List<Movie>> getTasks(String apiKey, String language, String pageNo) {
+        return repository.getTasks(apiKey,language,pageNo);
     }
 }

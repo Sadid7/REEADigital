@@ -4,23 +4,36 @@ import com.google.gson.annotations.SerializedName;
 
 public class Movie {
 
-    @SerializedName("albumId")
-    private Integer albumId;
     @SerializedName("id")
-    private Integer id;
+    private Integer movieId;
     @SerializedName("title")
-    private String title;
-    @SerializedName("url")
-    private String url;
-    @SerializedName("thumbnailUrl")
+    private String movieTitle;
+    @SerializedName("overview")
+    private String movieDetails;
+    @SerializedName("poster_path")
     private String thumbnailUrl;
 
-    public Movie(Integer albumId, Integer id, String title,
-                      String url, String thumbnailUrl) {
-        this.albumId = albumId;
-        this.id = id;
-        this.title = title;
-        this.url = url;
+    public Movie(Integer movieId, String movieTitle,
+                 String movieDetails, String thumbnailUrl) {
+        this.movieId = movieId;
+        this.movieTitle = movieTitle;
+        this.movieDetails = movieDetails;
         this.thumbnailUrl = thumbnailUrl;
+    }
+
+    public Integer getMovieId() {
+        return movieId;
+    }
+
+    public String getMovieTitle() {
+        return movieTitle;
+    }
+
+    public String getMovieDetails() {
+        return movieDetails;
+    }
+
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
     }
 }

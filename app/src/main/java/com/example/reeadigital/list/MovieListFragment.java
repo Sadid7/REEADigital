@@ -16,7 +16,7 @@ import com.example.reeadigital.Utils;
 
 import java.util.List;
 
-public class MovieList extends Fragment {
+public class MovieListFragment extends Fragment implements Observer<List<Movie>>{
 
     ProgressDialog progressDialog;
     @Nullable
@@ -26,6 +26,8 @@ public class MovieList extends Fragment {
         View view = (View) inflater.inflate(R.layout.fragment_movie_list, container, false);
         progressDialog = Utils.getProgreesDialog(getContext(), getString(R.string.data_fetch_message));
         //return super.onCreateView(inflater, container, savedInstanceState);
+        progressDialog.show();
+        setupViewModel();
         return view;
     }
 
@@ -34,18 +36,23 @@ public class MovieList extends Fragment {
         MovieListViewModel viewModel = new MovieListViewModel(getContext());
                 //ViewModelProviders.of(this,factory)
                 //.get(MainViewModel.class);
-        viewModel.getTasks().observe(this, movies -> {
-            if(movies.isEmpty()){
+        viewModel.getTasks("","","").observe(this,this);
+
+    }
+
+    private void generateMovieList(List<Movie> movieApiRespons) {
+
+    }
+
+    @Override
+    public void onChanged(List<Movie> movieApiRespons) {
+
+            if(movieApiRespons.isEmpty()){
                 progressDialog.dismiss();
             }
             else{
                 progressDialog.dismiss();
-                generateMovieList( movies );
+                generateMovieList(movieApiRespons);
             }
-        });
-    }
-
-    private void generateMovieList(List<Movie> movies) {
-
     }
 }

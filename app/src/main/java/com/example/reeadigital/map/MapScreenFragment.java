@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.reeadigital.R;
 
-public class MapScreen extends Fragment {
+public class MapScreenFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = (View) inflater.inflate(R.layout.fragment_map_screen, container, false);
