@@ -7,6 +7,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -24,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_layout);
         setupNavigationBar();
+        //saveApiKeyToSharedPref();
         //setAppbarConfigWithDestinations();
-
     }
     private void setupNavigationBar(){
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
@@ -34,6 +36,15 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         NavigationUI.setupWithNavController(bottomNav, navController);
     }
+
+    /* Api key saved to shared pref since login or authentication is not involved  */
+
+    /*private void saveApiKeyToSharedPref() {
+        SharedPreferences sharedPref = getSharedPreferences(this.getPackageName(),Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(Utils.apiKeyName, "15673ce2e17445aae3ae809f818eb6a3");
+        editor.apply();
+    }*/
 
     private void setAppbarConfigWithDestinations() {
 

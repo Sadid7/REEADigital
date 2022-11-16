@@ -8,6 +8,6 @@
         android:id="@+id/mapScreen"
         android:name="com.example.reeadigital.map.MapScreenFragment"
         android:label="@string/map"
-        tools:layout="@layout/fragment_map_screen">
+        tools:layout="@layout/fragment_map_screen_layout">
     </fragment>
 </navigation>

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.reeadigital.R;
 import com.example.reeadigital.Utils;
@@ -19,40 +20,48 @@ import java.util.List;
 public class MovieListFragment extends Fragment implements Observer<List<Movie>>{
 
     ProgressDialog progressDialog;
+    MovieListViewModel movieListViewModel;
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
 
-        View view = (View) inflater.inflate(R.layout.fragment_movie_list, container, false);
+        View view = (View) inflater.inflate(R.layout.fragment_movie_list_layout, container, false);
         progressDialog = Utils.getProgreesDialog(getContext(), getString(R.string.data_fetch_message));
         //return super.onCreateView(inflater, container, savedInstanceState);
-        progressDialog.show();
-        setupViewModel();
+        if (movieListViewModel == null) {
+            setupViewModel();
+        }
         return view;
     }
 
     private void setupViewModel() {
-        //MainViewModelFactory factory = new MainViewModelFactory(this);
+
+        /*//MainViewModelFactory factory = new MainViewModelFactory(this);
         MovieListViewModel viewModel = new MovieListViewModel(getContext());
-                //ViewModelProviders.of(this,factory)
-                //.get(MainViewModel.class);
-        viewModel.getTasks("","","").observe(this,this);
-
-    }
-
-    private void generateMovieList(List<Movie> movieApiRespons) {
-
+                ViewModelProvider.(this,factory)
+                .get(MainViewModel.class);*/
+        progressDialog.show();
+        movieListViewModel = new ViewModelProvider(this)
+                        .get(MovieListViewModel.class);
+        movieListViewModel.getMovieList().observe(this,this);
+        movieListViewModel.loadMovieList("","","");
     }
 
     @Override
-    public void onChanged(List<Movie> movieApiRespons) {
+    public void onChanged(List<Movie> movieApiResponse) {
 
-            if(movieApiRespons.isEmpty()){
+            if(movieApiResponse.isEmpty()){
                 progressDialog.dismiss();
             }
             else{
                 progressDialog.dismiss();
-                generateMovieList(movieApiRespons);
+                generateMovieList(movieApiResponse);
             }
     }
+    private void generateMovieList(List<Movie> movieApiResponse) {
+
+    }
+
 }

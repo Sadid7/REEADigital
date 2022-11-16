@@ -11,12 +11,18 @@ import java.util.List;
 
 public class MovieListViewModel extends ViewModel {
     Repository repository;
+    Integer currentPageNo;
 
-    public MovieListViewModel(Context context) {
-        repository = new Repository(context);
+    public MovieListViewModel() {
+        repository = new Repository();
+        currentPageNo = 1;
     }
 
-    public MutableLiveData<List<Movie>> getTasks(String apiKey, String language, String pageNo) {
-        return repository.getTasks(apiKey,language,pageNo);
+    public void loadMovieList(String apiKey, String language, String pageNo) {
+        repository.requestMovieListData(language,pageNo);
+    }
+
+    public MutableLiveData<List<Movie>> getMovieList() {
+        return repository.getMovieListData();
     }
 }

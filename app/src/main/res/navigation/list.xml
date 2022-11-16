@@ -8,6 +8,6 @@
         android:id="@+id/listScreen"
         android:name="com.example.reeadigital.list.MovieListFragment"
         android:label="@string/movie_list"
-        tools:layout="@layout/fragment_movie_list">
+        tools:layout="@layout/fragment_movie_list_layout">
     </fragment>
 </navigation>

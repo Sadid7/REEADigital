@@ -14,7 +14,7 @@ import com.example.reeadigital.R;
 public class MapScreenFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = (View) inflater.inflate(R.layout.fragment_map_screen, container, false);
+        View view = (View) inflater.inflate(R.layout.fragment_map_screen_layout, container, false);
 
         //return super.onCreateView(inflater, container, savedInstanceState);
         return view;
