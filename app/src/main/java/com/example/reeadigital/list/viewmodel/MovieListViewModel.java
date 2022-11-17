@@ -10,18 +10,17 @@ import java.util.List;
 
 public class MovieListViewModel extends ViewModel {
     Repository repository;
-    Integer currentPageNo;
+
 
     public MovieListViewModel() {
         repository = new Repository();
-        currentPageNo = 1;
     }
 
-    public void loadMovieList(String apiKey, String language, String pageNo) {
-        repository.requestMovieListData(language,pageNo);
+    public void fetchMovieList(String language) {
+        repository.requestMovieListData(language);
     }
 
-    public MutableLiveData<List<Movie>> getMovieList() {
+    public MutableLiveData<List<Movie>> getAvailableMovieList() {
         return repository.getAllMovieListData();
     }
 }

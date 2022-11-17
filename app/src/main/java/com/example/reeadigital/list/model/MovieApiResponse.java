@@ -2,6 +2,7 @@ package com.example.reeadigital.list.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MovieApiResponse {

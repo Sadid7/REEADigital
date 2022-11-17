@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,10 +22,13 @@ import com.example.reeadigital.list.model.Movie;
 
 import java.util.List;
 
-public class MovieListFragment extends Fragment implements Observer<List<Movie>>{
+public class MovieListFragment extends Fragment implements AbsListView.OnScrollListener, Observer<List<Movie>>{
 
     ProgressDialog progressDialog;
     MovieListViewModel movieListViewModel;
+    ListView movieListView;
+    MovieListViewAdapter movieListViewAdapter;
+    boolean doneOnce = false;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -32,29 +37,32 @@ public class MovieListFragment extends Fragment implements Observer<List<Movie>>
 
         View view = (View) inflater.inflate(R.layout.fragment_movie_list_layout, container, false);
         progressDialog = Utils.getProgreesDialog(getContext(), getString(R.string.data_fetch_message));
-        //return super.onCreateView(inflater, container, savedInstanceState);
+        movieListView = (ListView) view.findViewById(R.id.lv_movie_list);
+        movieListView.setOnScrollListener(this);
         if (movieListViewModel == null) {
             setupViewModel();
+            initializeViewAdapter();
+        } else {
+            movieListView.setAdapter(movieListViewAdapter);
         }
         return view;
     }
-
     private void setupViewModel() {
-
-        /*//MainViewModelFactory factory = new MainViewModelFactory(this);
-        MovieListViewModel viewModel = new MovieListViewModel(getContext());
-                ViewModelProvider.(this,factory)
-                .get(MainViewModel.class);*/
         progressDialog.show();
         movieListViewModel = new ViewModelProvider(this)
                         .get(MovieListViewModel.class);
-        movieListViewModel.getMovieList().observe(this,this);
-        movieListViewModel.loadMovieList("","","");
+        movieListViewModel.getAvailableMovieList().observe(this,this);
+        movieListViewModel.fetchMovieList("");
+    }
+
+    private void initializeViewAdapter() {
+        this.movieListViewAdapter = new MovieListViewAdapter(getContext(),
+                movieListViewModel.getAvailableMovieList().getValue());
+        //movieListView.setAdapter(movieListViewAdapter);
     }
 
     @Override
     public void onChanged(List<Movie> movieApiResponse) {
-
             if(movieApiResponse.isEmpty()){
                 progressDialog.dismiss();
             }
@@ -64,8 +72,26 @@ public class MovieListFragment extends Fragment implements Observer<List<Movie>>
             }
     }
     private void generateMovieList(List<Movie> movieApiResponse) {
-
-        Log.e("MovieLIstFrag", movieApiResponse.get(0).getMovieDetails());
+        movieListViewAdapter.setMovieList(movieApiResponse);
+        if (!doneOnce) {
+            movieListView.setAdapter(movieListViewAdapter);
+        }
+        doneOnce = true;
+        movieListViewAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onScrollStateChanged(AbsListView absListView, int i) {
+
+    }
+
+    @Override
+    public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount,
+                         int totalItemCount) {
+        final int lastItem = firstVisibleItem + visibleItemCount;
+        if(lastItem !=0 && lastItem == totalItemCount) {
+            //progressDialog.show();
+            movieListViewModel.fetchMovieList("");
+        }
+    }
 }

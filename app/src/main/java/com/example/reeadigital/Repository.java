@@ -18,30 +18,45 @@ import retrofit2.Response;
 public class Repository implements Callback<MovieApiResponse>{
     MutableLiveData<List<Movie>> allMovieListData;
     MovieApiResponse currentMovieApiResponse;
+    Integer currentPageNo;
 
     public Repository() {
         this.allMovieListData = new MutableLiveData<>();
         this.currentMovieApiResponse = new MovieApiResponse();
+        this.currentPageNo = 0;
     }
 
-    public MutableLiveData<List<Movie>> requestMovieListData(String language, String pageNo) {
+    public void requestMovieListData(String language) {
+        if (currentPageNo == 0) {
+            currentPageNo++;
+            enqueueMovieListDataRequest(language,currentPageNo.toString());
+        } else if (currentPageNo <= getTotalPageNo()) {
+            currentPageNo++;
+            enqueueMovieListDataRequest(language,currentPageNo.toString());
+        }
+    }
+
+    private void enqueueMovieListDataRequest(String language, String pageNo) {
         GetMovieLIstService service = RetrofitClientInstance.getRetrofitInstance()
                 .create(GetMovieLIstService.class);
         Call<MovieApiResponse> call = service.getMovieList(Utils.apiKey,
-                "en-US","4");
+                "en-US",pageNo);
         call.enqueue(this);
-        return allMovieListData;
     }
 
     public MutableLiveData<List<Movie>> getAllMovieListData() {
         return allMovieListData;
     }
-
+/*pagination*/
     public Integer getTotalPageNo() {
         return currentMovieApiResponse.getTotalPages();
     }
-    public Integer getCurrentPageNo() {
-        return currentMovieApiResponse.getPageNo();
+    public Integer getValidPageNo() {
+        if (currentMovieApiResponse.getPageNo() == null) {
+            return 1;
+        } else if (currentMovieApiResponse.getPageNo() <= getTotalPageNo()) {
+            return currentMovieApiResponse.getPageNo();
+        } else return currentMovieApiResponse.getPageNo();
     }
 
 /*    private String getApiKeyFromSharedPref() {
@@ -53,12 +68,12 @@ public class Repository implements Callback<MovieApiResponse>{
     @Override
     public void onResponse(Call<MovieApiResponse> call, Response<MovieApiResponse> response) {
         Log.e("Sabid", response.code()+"");
-        Log.e("Sabid",    response.body().getMovieList().get(0).getMovieDetails());
+        //Log.e("Sabid",    response.body().getMovieList().get(0).getMovieDetails());
         currentMovieApiResponse = response.body();
         if (allMovieListData.getValue() == null) {
-            allMovieListData.setValue(response.body().getMovieList());
+            allMovieListData.postValue(response.body().getMovieList());
         } else {
-            allMovieListData.getValue().addAll(response.body().getMovieList());
+           appendMovieListData(response.body().getMovieList());
         }
     }
 
@@ -67,5 +82,11 @@ public class Repository implements Callback<MovieApiResponse>{
         Log.e("Sabid", t.getLocalizedMessage());
         allMovieListData.setValue(null);
         //Failure Messsage
+    }
+
+    private void appendMovieListData(List<Movie> movieList) {
+        List<Movie> movies = allMovieListData.getValue();
+        movies.addAll(movieList);
+        allMovieListData.postValue(movies);
     }
 }
