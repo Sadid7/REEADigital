@@ -10,10 +10,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class Utils {
-    final static String apiKey = "15673ce2e17445aae3ae809f818eb6a3";
-    final static Integer initialPageNo = 1;
-    final static String apiKeyName = "api_key_auth";
-    final static String sharedPrefFileName = "com.example.reeadigital.PREFERENCE_FILE_KEY";
+    public final static String MOVIE_LIST_API_KEY = "15673ce2e17445aae3ae809f818eb6a3";
+    public final static int REQUEST_CODE = 101;
     public static AlertDialog showErrorDialog(Context context,
                                              String message,
                                              DialogInterface.OnClickListener listener

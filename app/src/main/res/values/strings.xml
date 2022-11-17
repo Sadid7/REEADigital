@@ -8,4 +8,5 @@
     <string name="movie_list">Movie List</string>
     <string name="map">Map</string>
     <string name="data_fetch_message">Fetching User Data</string>
+    <string name="google_maps_api_key">AIzaSyCmU-r8ZXeiyKIiiz3oiWgOebtn43Z217w</string>
 </resources>

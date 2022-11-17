@@ -28,23 +28,21 @@ public class MovieListFragment extends Fragment implements AbsListView.OnScrollL
     MovieListViewModel movieListViewModel;
     ListView movieListView;
     MovieListViewAdapter movieListViewAdapter;
-    boolean doneOnce = false;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View view = (View) inflater.inflate(R.layout.fragment_movie_list_layout, container, false);
+        View view = inflater.inflate(R.layout.fragment_movie_list_layout, container, false);
         progressDialog = Utils.getProgreesDialog(getContext(), getString(R.string.data_fetch_message));
-        movieListView = (ListView) view.findViewById(R.id.lv_movie_list);
-        movieListView.setOnScrollListener(this);
+        movieListView = view.findViewById(R.id.lv_movie_list);
         if (movieListViewModel == null) {
             setupViewModel();
             initializeViewAdapter();
-        } else {
-            movieListView.setAdapter(movieListViewAdapter);
         }
+        movieListView.setAdapter(movieListViewAdapter);
+        movieListView.setOnScrollListener(this);
         return view;
     }
     private void setupViewModel() {
@@ -58,7 +56,6 @@ public class MovieListFragment extends Fragment implements AbsListView.OnScrollL
     private void initializeViewAdapter() {
         this.movieListViewAdapter = new MovieListViewAdapter(getContext(),
                 movieListViewModel.getAvailableMovieList().getValue());
-        //movieListView.setAdapter(movieListViewAdapter);
     }
 
     @Override
@@ -73,17 +70,11 @@ public class MovieListFragment extends Fragment implements AbsListView.OnScrollL
     }
     private void generateMovieList(List<Movie> movieApiResponse) {
         movieListViewAdapter.setMovieList(movieApiResponse);
-        if (!doneOnce) {
-            movieListView.setAdapter(movieListViewAdapter);
-        }
-        doneOnce = true;
         movieListViewAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onScrollStateChanged(AbsListView absListView, int i) {
-
-    }
+    public void onScrollStateChanged(AbsListView absListView, int i) {}
 
     @Override
     public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount,

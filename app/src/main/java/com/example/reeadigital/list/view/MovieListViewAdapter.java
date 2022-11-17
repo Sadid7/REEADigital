@@ -14,7 +14,6 @@ import java.util.List;
 public class MovieListViewAdapter extends BaseAdapter {
     List<Movie> movieList;
     LayoutInflater layoutInflater;
-
     MovieListViewAdapter(Context context,
                          List<Movie> movieList) {
         this.movieList = movieList;
@@ -23,7 +22,11 @@ public class MovieListViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return movieList.size();
+        if (movieList == null) {
+            return 0;
+        } else {
+            return movieList.size();
+        }
     }
 
     @Override

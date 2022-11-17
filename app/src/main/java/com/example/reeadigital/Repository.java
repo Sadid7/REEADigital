@@ -39,7 +39,7 @@ public class Repository implements Callback<MovieApiResponse>{
     private void enqueueMovieListDataRequest(String language, String pageNo) {
         GetMovieLIstService service = RetrofitClientInstance.getRetrofitInstance()
                 .create(GetMovieLIstService.class);
-        Call<MovieApiResponse> call = service.getMovieList(Utils.apiKey,
+        Call<MovieApiResponse> call = service.getMovieList(Utils.MOVIE_LIST_API_KEY,
                 "en-US",pageNo);
         call.enqueue(this);
     }
