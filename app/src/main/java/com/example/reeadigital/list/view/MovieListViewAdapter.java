@@ -47,17 +47,17 @@ public class MovieListViewAdapter extends BaseAdapter {
                     false);
         }
 
-        TextView tvUserName = (TextView) view.findViewById(R.id.tv_movie_title);
-        TextView tvUserEmail = (TextView) view.findViewById(R.id.tv_movie_details);
-        ImageView ivUserImage = (ImageView) view.findViewById(R.id.iv_movie_thumbnail);
-        tvUserName.setText(movieList.get(i).getMovieTitle());
-        tvUserEmail.setText(movieList.get(i).getMovieDetails());
-        /**method to download images using picasso */
+        TextView tvMovieTitle = (TextView) view.findViewById(R.id.tv_movie_title);
+        TextView tvMovieDetails = (TextView) view.findViewById(R.id.tv_movie_details);
+        tvMovieTitle.setText(movieList.get(i).getMovieTitle());
+        tvMovieDetails.setText(movieList.get(i).getMovieDetails());
+        /**method to download images using picasso is called here */
+        //ImageView movieThumbnail = (ImageView) view.findViewById(R.id.iv_movie_thumbnail);
         //loadUserImage(userInfoList.get(i).getImageUri(), ivUserImage);
         return view;
     }
 
-    /**private void loadUserImage(String imageUri, ImageView userImageView) {
+    /*private void loadUserImage(String imageUri, ImageView userImageView) {
         Picasso.get()
                 .load(imageUri)
                 .resize(350,350)
