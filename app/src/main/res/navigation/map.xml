@@ -6,7 +6,7 @@
     app:startDestination="@id/mapScreen">
     <fragment
         android:id="@+id/mapScreen"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:name="com.example.reeadigital.map.MapScreenFragment"
         android:label="@string/map"
         tools:layout="@layout/fragment_map_screen_layout">
     </fragment>
