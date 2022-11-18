@@ -57,7 +57,7 @@ public class MovieListViewAdapter extends BaseAdapter {
         return view;
     }
 
-    /*private void loadUserImage(String imageUri, ImageView userImageView) {
+    /**private void loadUserImage(String imageUri, ImageView userImageView) {
         Picasso.get()
                 .load(imageUri)
                 .resize(350,350)
