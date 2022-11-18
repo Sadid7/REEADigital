@@ -8,6 +8,7 @@
     tools:context=".MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
+        android:paddingHorizontal="10dp"
         android:layout_height="0dp"
         android:layout_weight="10"
         android:name="androidx.navigation.fragment.NavHostFragment"

@@ -21,6 +21,7 @@ import com.example.reeadigital.list.viewmodel.MovieListViewModel;
 import com.example.reeadigital.list.model.Movie;
 
 import java.util.List;
+import java.util.Objects;
 
 public class MovieListFragment extends Fragment implements AbsListView.OnScrollListener, Observer<List<Movie>>{
 
@@ -47,10 +48,11 @@ public class MovieListFragment extends Fragment implements AbsListView.OnScrollL
     }
     private void setupViewModel() {
         progressDialog.show();
-        movieListViewModel = new ViewModelProvider(this)
+        movieListViewModel = new ViewModelProvider(requireActivity())
                         .get(MovieListViewModel.class);
         movieListViewModel.getAvailableMovieList().observe(this,this);
-        movieListViewModel.fetchMovieList("");
+        Log.e("Sabid",getResources().getConfiguration().locale.toString());
+        movieListViewModel.fetchMovieList(getResources().getConfiguration().locale.toString());
     }
 
     private void initializeViewAdapter() {
@@ -82,7 +84,13 @@ public class MovieListFragment extends Fragment implements AbsListView.OnScrollL
         final int lastItem = firstVisibleItem + visibleItemCount;
         if(lastItem !=0 && lastItem == totalItemCount) {
             //progressDialog.show();
-            movieListViewModel.fetchMovieList("");
+              movieListViewModel.fetchMovieList(getResources().getConfiguration().locale.toString());
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        progressDialog.dismiss();
+        super.onDestroy();
     }
 }

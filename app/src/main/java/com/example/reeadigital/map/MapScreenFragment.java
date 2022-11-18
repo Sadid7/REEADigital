@@ -39,25 +39,17 @@ public class MapScreenFragment extends Fragment implements OnSuccessListener<Loc
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
         View view = (View) inflater.inflate(R.layout.fragment_map_screen_layout, container, false);
-        //return super.onCreateView(inflater, container, savedInstanceState);
         googleMapView = view.findViewById(R.id.mv_google_map);
         googleMapView.onCreate(savedInstanceState);
-        //googleMapView.onResume();
         fusedLocationProviderClient = LocationServices
                 .getFusedLocationProviderClient(getContext());
         fetchLastLocation();
-      /*  try {
-            MapsInitializer.initialize(getActivity().getApplicationContext());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-        //googleMapView.getMapAsync(this);
         return view;
     }
 
     private void fetchLastLocation() {
+        Log.e("Sabid", "FetchLast1");
         if (ActivityCompat.checkSelfPermission(getContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED &&
@@ -65,36 +57,30 @@ public class MapScreenFragment extends Fragment implements OnSuccessListener<Loc
                         , Manifest.permission.ACCESS_COARSE_LOCATION)
                         != PackageManager.PERMISSION_GRANTED) {
 
-            ActivityCompat.requestPermissions(getActivity(), new String[]{
+            requestPermissions(new String[]{
                     Manifest.permission.ACCESS_FINE_LOCATION}, Utils.REQUEST_CODE);
-            return;
+        } else {
+            Log.e("Sabid", "FetchLast1");
+            Task<Location> task = fusedLocationProviderClient.getLastLocation();
+            task.addOnSuccessListener(this);
         }
-        Task<Location> task = fusedLocationProviderClient.getLastLocation();
-        Log.e("Sabid", "FetchLast");
-
-        task.addOnSuccessListener(this);
-
     }
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-        Log.e("Sabid", "OnMapReady");
         LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions().position(latLng)
-                .title("You Are Here!");
+        MarkerOptions markerOptions = new MarkerOptions().position(latLng);
         googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 5));
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 20));
         googleMap.addMarker(markerOptions);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case Utils.REQUEST_CODE:
-                if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     fetchLastLocation();
-                }
-                break;
+        } else {
+            googleMapView.onResume();
         }
     }
 

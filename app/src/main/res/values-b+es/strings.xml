@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">REEA Digital</string>
+    <string name="home_icon_name">HOME</string>
+    <string name="map_icon_name">MAP</string>
+    <string name="menu_icon_name">MENU</string>
+    <string name="error_message_title">Se produjo un error</string>
+    <string name="error_message">No se pudieron recuperar los datos en línea</string>
+    <string name="retry_button_name">Rever</string>
+    <string name="movie_list">Lista de películas</string>
+    <string name="map">Mapa</string>
+    <string name="data_fetch_message">Obtención de datos de usuario</string>
+    <string name="google_maps_api_key">AIzaSyCmU-r8ZXeiyKIiiz3oiWgOebtn43Z217w</string>
+</resources>

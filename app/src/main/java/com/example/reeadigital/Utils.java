@@ -12,14 +12,16 @@ import java.io.FileNotFoundException;
 public class Utils {
     public final static String MOVIE_LIST_API_KEY = "15673ce2e17445aae3ae809f818eb6a3";
     public final static int REQUEST_CODE = 101;
+    public final static String ENGLISH_US_LOCALE = "en_us";
+    public final static String SPANISH_LOCALE = "es";
     public static AlertDialog showErrorDialog(Context context,
                                              String message,
                                              DialogInterface.OnClickListener listener
                                              ) {
         return new AlertDialog.Builder(context).
-                setTitle("Error Occurred").
+                setTitle(context.getString(R.string.error_message_title)).
                 setMessage(message)
-                .setNeutralButton("Retry",listener).
+                .setNeutralButton(context.getString(R.string.retry_button_name),listener).
                         create();
     }
 

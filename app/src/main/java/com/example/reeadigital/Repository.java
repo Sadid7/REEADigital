@@ -18,7 +18,7 @@ import retrofit2.Response;
 public class Repository implements Callback<MovieApiResponse>{
     MutableLiveData<List<Movie>> allMovieListData;
     MovieApiResponse currentMovieApiResponse;
-    Integer currentPageNo;
+    int currentPageNo;
 
     public Repository() {
         this.allMovieListData = new MutableLiveData<>();
@@ -29,10 +29,10 @@ public class Repository implements Callback<MovieApiResponse>{
     public void requestMovieListData(String language) {
         if (currentPageNo == 0) {
             currentPageNo++;
-            enqueueMovieListDataRequest(language,currentPageNo.toString());
-        } else if (currentPageNo <= getTotalPageNo()) {
+            enqueueMovieListDataRequest(language,Integer.toString(currentPageNo));
+        } else if ( currentPageNo <= getTotalPageNo()) {
             currentPageNo++;
-            enqueueMovieListDataRequest(language,currentPageNo.toString());
+            enqueueMovieListDataRequest(language,Integer.toString(currentPageNo));
         }
     }
 
@@ -40,37 +40,26 @@ public class Repository implements Callback<MovieApiResponse>{
         GetMovieLIstService service = RetrofitClientInstance.getRetrofitInstance()
                 .create(GetMovieLIstService.class);
         Call<MovieApiResponse> call = service.getMovieList(Utils.MOVIE_LIST_API_KEY,
-                "en-US",pageNo);
+                language,pageNo);
         call.enqueue(this);
     }
 
     public MutableLiveData<List<Movie>> getAllMovieListData() {
         return allMovieListData;
     }
-/*pagination*/
-    public Integer getTotalPageNo() {
-        return currentMovieApiResponse.getTotalPages();
-    }
-    public Integer getValidPageNo() {
-        if (currentMovieApiResponse.getPageNo() == null) {
-            return 1;
-        } else if (currentMovieApiResponse.getPageNo() <= getTotalPageNo()) {
-            return currentMovieApiResponse.getPageNo();
-        } else return currentMovieApiResponse.getPageNo();
-    }
 
-/*    private String getApiKeyFromSharedPref() {
-        SharedPreferences sharedPref = context.getSharedPreferences(Utils.sharedPrefFileName,
-                Context.MODE_PRIVATE);
-        return sharedPref.getString(Utils.apiKeyName,"");
-    }*/
+    public Integer getTotalPageNo() {
+        if (currentMovieApiResponse.getTotalPages() != null) {
+            return currentMovieApiResponse.getTotalPages();
+        } else return 0;
+
+    }
 
     @Override
     public void onResponse(Call<MovieApiResponse> call, Response<MovieApiResponse> response) {
-        Log.e("Sabid", response.code()+"");
-        //Log.e("Sabid",    response.body().getMovieList().get(0).getMovieDetails());
         currentMovieApiResponse = response.body();
         if (allMovieListData.getValue() == null) {
+            //Log.e("Sabid", call.request().body().toString());
             allMovieListData.postValue(response.body().getMovieList());
         } else {
            appendMovieListData(response.body().getMovieList());
