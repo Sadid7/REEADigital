@@ -5,6 +5,8 @@
     <string name="menu_icon_name">MENU</string>
     <string name="error_message_title">Se produjo un error</string>
     <string name="error_message">No se pudieron recuperar los datos en línea</string>
+    <string name="no_internet_message">Internet no está disponible</string>
+    <string name="turn_on_internet">Enciende Internet e inténtalo de nuevo.</string>
     <string name="retry_button_name">Rever</string>
     <string name="movie_list">Lista de películas</string>
     <string name="map">Mapa</string>

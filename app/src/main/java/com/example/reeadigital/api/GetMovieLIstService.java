@@ -1,4 +1,4 @@
-package com.example.reeadigital.apiCall;
+package com.example.reeadigital.api;
 
 import com.example.reeadigital.list.model.MovieApiResponse;
 

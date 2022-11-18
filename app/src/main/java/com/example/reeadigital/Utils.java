@@ -14,15 +14,19 @@ public class Utils {
     public final static int REQUEST_CODE = 101;
     public final static String ENGLISH_US_LOCALE = "en_us";
     public final static String SPANISH_LOCALE = "es";
+    public final static int ENGLISH_US_LOCALE_SPINNER_ID = 0;
+    public final static int SPANISH_LOCALE_SPINNER_ID = 1;
     public static AlertDialog showErrorDialog(Context context,
+                                             String title,
                                              String message,
                                              DialogInterface.OnClickListener listener
                                              ) {
         return new AlertDialog.Builder(context).
-                setTitle(context.getString(R.string.error_message_title)).
-                setMessage(message)
-                .setNeutralButton(context.getString(R.string.retry_button_name),listener).
-                        create();
+                setTitle(title)
+                .setMessage(message)
+                .setNeutralButton(context.getString(R.string.retry_button_name),listener)
+                .setCancelable(false)
+                .create();
     }
 
     public static ProgressDialog getProgreesDialog(Context context, String message)
