@@ -13,6 +13,7 @@ public class Utils {
     public final static String SPANISH_LOCALE = "es";
     public final static int ENGLISH_US_LOCALE_SPINNER_ID = 0;
     public final static int SPANISH_LOCALE_SPINNER_ID = 1;
+    public final static int INITIAL_PAGE_NO = 1;
     public static AlertDialog showErrorDialog(Context context,
                                              String title,
                                              String message,

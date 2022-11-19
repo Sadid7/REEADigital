@@ -15,19 +15,16 @@ import retrofit2.Response;
 public class MovieListRepository implements Callback<MovieApiResponse>{
     MovieApiResponse currentMovieApiResponse;
     MovieListApiListener movieListApiListener;
-    int currentPageNo;
+
     public MovieListRepository(MovieListApiListener movieListApiListener) {
-        this.currentMovieApiResponse = new MovieApiResponse();
-        this.currentPageNo = 0;
         this.movieListApiListener = movieListApiListener;
     }
     public void requestMovieListData(String language) {
-        if (currentPageNo == 0) {
-            currentPageNo++;
-            enqueueMovieListDataRequest(language,Integer.toString(currentPageNo));
-        } else if ( currentPageNo <= getTotalPageNo()) {
-            currentPageNo++;
-            enqueueMovieListDataRequest(language,Integer.toString(currentPageNo));
+        if (currentMovieApiResponse == null) {
+            enqueueMovieListDataRequest(language,Integer.toString(Utils.INITIAL_PAGE_NO));
+        } else if ( currentMovieApiResponse.getPageNo() <= getTotalPageNo()) {
+            int nextPageNo = currentMovieApiResponse.getPageNo() + 1;
+            enqueueMovieListDataRequest(language,Integer.toString(nextPageNo));
         }
     }
 

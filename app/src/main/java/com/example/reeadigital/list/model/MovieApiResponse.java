@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 /**Simple POJO class based on the api response*/
 public class MovieApiResponse {
-
     @SerializedName("page")
     private Integer pageNo;
     @SerializedName("results")
@@ -12,10 +11,11 @@ public class MovieApiResponse {
     @SerializedName("total_pages")
     private Integer totalPages;
 
+
+    public Integer getPageNo() {return pageNo;}
     public Integer getTotalPages() {
         return totalPages;
     }
-
     public List<Movie> getMovieList() {
         return movieList;
     }
