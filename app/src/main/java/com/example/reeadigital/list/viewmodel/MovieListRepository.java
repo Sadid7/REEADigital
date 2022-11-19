@@ -19,6 +19,11 @@ public class MovieListRepository implements Callback<MovieApiResponse>{
     public MovieListRepository(MovieListApiListener movieListApiListener) {
         this.movieListApiListener = movieListApiListener;
     }
+    /**Exposed method to be called from outside the class
+     *enqueues api call to create initial data
+     *enqueues api calls until all the pages data is retireved
+     *through listview scroll
+     *ignores all the other requests if all the pages are retrieved */
     public void requestMovieListData(String language) {
         if (currentMovieApiResponse == null) {
             enqueueMovieListDataRequest(language,Integer.toString(Utils.INITIAL_PAGE_NO));
@@ -27,7 +32,7 @@ public class MovieListRepository implements Callback<MovieApiResponse>{
             enqueueMovieListDataRequest(language,Integer.toString(nextPageNo));
         }
     }
-
+    /**Enqueues api call for movie api call*/
     private void enqueueMovieListDataRequest(String language, String pageNo) {
         GetMovieLIstService service = RetrofitClientInstance.getRetrofitInstance()
                 .create(GetMovieLIstService.class);
@@ -40,6 +45,8 @@ public class MovieListRepository implements Callback<MovieApiResponse>{
             return currentMovieApiResponse.getTotalPages();
         } else return 0;
     }
+    /** On successful response passes movie data to view model
+     * and keeps the latest response for reference*/
     @Override
     public void onResponse(Call<MovieApiResponse> call, Response<MovieApiResponse> response) {
         //sets latest api response as currentMovieApiResponse
