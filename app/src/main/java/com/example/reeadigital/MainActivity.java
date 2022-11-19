@@ -19,7 +19,11 @@ import android.widget.Spinner;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Locale;
-
+/**Main and only activity
+ * contains navigation ui
+ * action bar with spinner for language selection
+ * bottom navigation for switching between fragments
+ */
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     boolean isFirstCall;
     @Override
@@ -29,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setupNavigationBar();
         isFirstCall = true;
     }
+    /** initializes and sets navigation bar for fragment container*/
     private void setupNavigationBar(){
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment);
@@ -36,34 +41,36 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         NavigationUI.setupWithNavController(bottomNav, navController);
     }
+    /** call back method inflates the menu
+     * and adds items to the action bar if it is present.
+     * adds a language spinner to the activity action bar*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         MenuInflater menuInflater=getMenuInflater();
         menuInflater.inflate(R.menu.actionbar_menu, menu);
         MenuItem spinnerMenuItem = menu.findItem(R.id.spinner_view_menu_item);
         View actionView = spinnerMenuItem.getActionView();
         if (actionView instanceof Spinner)
         {
-            final Spinner spinner = (Spinner) actionView;
-            ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                    R.array.languages,
-                    R.layout.spinner_single_row_item);
-            spinner.setAdapter(arrayAdapter);
-            setLastSelectedLocaleInSpinner(spinner);
-            spinner.setOnItemSelectedListener(this);
+            setupLanguageSpinner(actionView);
         }
         return true;
     }
 
-    private void setLastSelectedLocaleInSpinner(Spinner spinner) {
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            int last = getIntent().getExtras().getInt("LastSelectedLanguageCode",0);
-            spinner.setSelection(last);
-        }
+    /** creates a language spinner with an array adapter made from resources array*/
+    private void setupLanguageSpinner(View actionView) {
+        final Spinner spinner = (Spinner) actionView;
+        ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                R.array.languages,
+                R.layout.spinner_single_row_item);
+        spinner.setAdapter(arrayAdapter);
+        setLastSelectedLocaleInSpinner(spinner);
+        spinner.setOnItemSelectedListener(this);
     }
 
+    /** spinner item select call back
+     * changes app locale to the selected language locale
+     * ignores first call back generated automatically*/
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int itemNumber, long l) {
         if (!isFirstCall) {
@@ -79,6 +86,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {}
 
+    /** changes app locale to the selected language locale
+     * ignores if already selected*/
     private void setSelectedLocale(String localeCode, int selectedLanguageId) {
         if (!getResources().getConfiguration().locale.toString().equalsIgnoreCase(localeCode))
         {
@@ -91,10 +100,23 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             restartActivity(selectedLanguageId);
         }
     }
+    /** restarts the activity for language changing to take effect
+     * passes the selected language in a bundle
+     * to the restarted activity to be set in the spinner*/
     private void restartActivity(int selectedLanguageId) {
         Intent restart = new Intent(this, MainActivity.class);
         restart.putExtra("LastSelectedLanguageCode", selectedLanguageId);
         startActivity(restart);
         finish();
+    }
+
+    /** gets the selected language from the activity if available
+     * and sets in the spinner as current selected language */
+    private void setLastSelectedLocaleInSpinner(Spinner spinner) {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            int last = getIntent().getExtras().getInt("LastSelectedLanguageCode",0);
+            spinner.setSelection(last);
+        }
     }
 }

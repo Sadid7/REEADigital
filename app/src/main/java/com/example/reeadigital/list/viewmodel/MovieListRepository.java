@@ -16,12 +16,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Repository implements Callback<MovieApiResponse>{
+public class MovieListRepository implements Callback<MovieApiResponse>{
     MutableLiveData<List<Movie>> allMovieListData;
     MovieApiResponse currentMovieApiResponse;
     int currentPageNo;
 
-    public Repository() {
+    public MovieListRepository() {
         this.allMovieListData = new MutableLiveData<>();
         this.currentMovieApiResponse = new MovieApiResponse();
         this.currentPageNo = 0;
@@ -58,20 +58,20 @@ public class Repository implements Callback<MovieApiResponse>{
 
     @Override
     public void onResponse(Call<MovieApiResponse> call, Response<MovieApiResponse> response) {
+        //sets latest api response as currentMovieApiResponse
         currentMovieApiResponse = response.body();
         if (allMovieListData.getValue() == null) {
-            //Log.e("Sabid", call.request().body().toString());
+            //initial addition to movie list
             allMovieListData.postValue(response.body().getMovieList());
         } else {
+            //append new movie list data with earliar movie data
            appendMovieListData(response.body().getMovieList());
         }
     }
 
     @Override
     public void onFailure(Call<MovieApiResponse> call, Throwable t) {
-        Log.e("Sabid", t.getLocalizedMessage());
-        allMovieListData.setValue(null);
-        //Failure Messsage
+        Log.e("MovieListRepository", t.getLocalizedMessage());
     }
 
     private void appendMovieListData(List<Movie> movieList) {

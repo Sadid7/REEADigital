@@ -1,7 +1,7 @@
 package com.example.reeadigital.list.model;
 
 import com.google.gson.annotations.SerializedName;
-
+/**Simple POJO class based on the api response*/
 public class Movie {
 
     @SerializedName("id")

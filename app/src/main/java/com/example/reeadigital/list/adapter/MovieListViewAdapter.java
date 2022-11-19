@@ -1,4 +1,4 @@
-package com.example.reeadigital.list.view;
+package com.example.reeadigital.list.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,12 +10,13 @@ import android.widget.TextView;
 import com.example.reeadigital.R;
 import com.example.reeadigital.list.model.Movie;
 import java.util.List;
-
+/**Simple adapter for movie list view*/
 public class MovieListViewAdapter extends BaseAdapter {
     List<Movie> movieList;
     LayoutInflater layoutInflater;
-    MovieListViewAdapter(Context context,
-                         List<Movie> movieList) {
+
+    public MovieListViewAdapter(Context context,
+                                List<Movie> movieList) {
         this.movieList = movieList;
         this.layoutInflater = (LayoutInflater.from(context));
     }
@@ -53,20 +54,20 @@ public class MovieListViewAdapter extends BaseAdapter {
         tvMovieDetails.setText(movieList.get(i).getMovieDetails());
         /**method to download images using picasso is called here */
         //ImageView movieThumbnail = (ImageView) view.findViewById(R.id.iv_movie_thumbnail);
-        //loadUserImage(userInfoList.get(i).getImageUri(), ivUserImage);
+        //loadMovieThumbnai(movieList.get(i).getThumbnailUrl(), movieThumbnail);
         return view;
     }
+    public void setMovieList(List<Movie> movieList) {
+        this.movieList = movieList;
+    }
 
-    /*private void loadUserImage(String imageUri, ImageView userImageView) {
+    /**method to download images using picasso is called here */
+/*    private void loadMovieThumbnai(String imageUri, ImageView movieThumbnail) {
         Picasso.get()
                 .load(imageUri)
                 .resize(350,350)
                 .centerCrop()
                 .placeholder(R.drawable.ic_launcher_foreground)
-                .into(userImageView);
+                .into(movieThumbnail);
     }*/
-
-    public void setMovieList(List<Movie> movieList) {
-        this.movieList = movieList;
-    }
 }

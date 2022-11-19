@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +18,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.reeadigital.R;
 import com.example.reeadigital.Utils;
+import com.example.reeadigital.list.adapter.MovieListViewAdapter;
 import com.example.reeadigital.list.viewmodel.MovieListViewModel;
 import com.example.reeadigital.list.model.Movie;
 
 import java.util.List;
-import java.util.Objects;
-
+/**Simple fragment view fetches movie list from online and shows it on a listview*/
 public class MovieListFragment extends Fragment implements AbsListView.OnScrollListener,
         Observer<List<Movie>>, DialogInterface.OnClickListener {
 
@@ -37,27 +36,34 @@ public class MovieListFragment extends Fragment implements AbsListView.OnScrollL
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie_list_layout, container, false);
-        progressDialog = Utils.getProgreesDialog(getContext(), getString(R.string.data_fetch_message));
-        ListView movieListView = view.findViewById(R.id.lv_movie_list);
+        /*initializes viewmodel and other dependent objects*/
         if (movieListViewModel == null) {
-            setupViewModel();
-            initializeViewAdapter();
+            setupInitialOnlineDataCall();
         }
+        ListView movieListView = view.findViewById(R.id.lv_movie_list);
         movieListView.setAdapter(movieListViewAdapter);
         movieListView.setOnScrollListener(this);
         return view;
     }
-    private void setupViewModel() {
+
+    private void setupInitialOnlineDataCall() {
+        progressDialog = Utils.getProgreesDialog(getContext(), getString(R.string.data_fetch_message));
         progressDialog.show();
-        movieListViewModel = new ViewModelProvider(requireActivity())
-                        .get(MovieListViewModel.class);
-        movieListViewModel.getAvailableMovieList().observe(this,this);
+        initializeViewModel();
         fetchOnlineData();
-    }
-    private void initializeViewAdapter() {
         this.movieListViewAdapter = new MovieListViewAdapter(getContext(),
                 movieListViewModel.getAvailableMovieList().getValue());
     }
+    private void initializeViewModel() {
+        movieListViewModel = new ViewModelProvider(requireActivity())
+                        .get(MovieListViewModel.class);
+        movieListViewModel.getAvailableMovieList().observe(this,this);
+    }
+    /**
+    * requests to fetch online data through viewmodel object
+     * sends current language locale as parameter
+     * after checking internet availibility
+     * otherwise shows error dialog*/
     private void fetchOnlineData() {
         if (Utils.isInternetAvailable(getContext())) {
             movieListViewModel.fetchMovieList(getResources().getConfiguration().locale.toString());
@@ -69,16 +75,19 @@ public class MovieListFragment extends Fragment implements AbsListView.OnScrollL
             alertDialog.show();
         }
     }
+
     @Override
-    public void onChanged(List<Movie> movieApiResponse) {
-            if(movieApiResponse.isEmpty()){
+    public void onChanged(List<Movie> movieList) {
+            if(movieList.isEmpty()){
                 progressDialog.dismiss();
             }
             else{
                 progressDialog.dismiss();
-                generateMovieList(movieApiResponse);
+                generateMovieList(movieList);
             }
     }
+    /**
+     * updates data in view adapter which it shows in list view*/
     private void generateMovieList(List<Movie> movieApiResponse) {
         movieListViewAdapter.setMovieList(movieApiResponse);
         movieListViewAdapter.notifyDataSetChanged();
@@ -86,6 +95,8 @@ public class MovieListFragment extends Fragment implements AbsListView.OnScrollL
     @Override
     public void onScrollStateChanged(AbsListView absListView, int i) {}
 
+    /**
+     * to make api call when user reaches the bottom of the listview*/
     @Override
     public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount,
                          int totalItemCount) {
@@ -94,6 +105,8 @@ public class MovieListFragment extends Fragment implements AbsListView.OnScrollL
               fetchOnlineData();
         }
     }
+    /**
+     * when retry button of error dialog is pressed calls for a retry of api call*/
     @Override
     public void onClick(DialogInterface dialogInterface, int i) {
         fetchOnlineData();

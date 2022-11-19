@@ -8,7 +8,7 @@ import android.net.ConnectivityManager;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
+/** Simple utility class with dialogs, ids, keys etc*/
 public class Utils {
     public final static String MOVIE_LIST_API_KEY = "15673ce2e17445aae3ae809f818eb6a3";
     public final static int REQUEST_CODE = 101;
@@ -42,19 +42,5 @@ public class Utils {
                 getSystemService(Context.CONNECTIVITY_SERVICE));
         return connectivityManager.getActiveNetworkInfo() != null
                 && connectivityManager.getActiveNetworkInfo().isConnected();
-    }
-
-    public static boolean isOfflineDataAvailable(Context context, String fileName) {
-        try {
-            FileInputStream inputStream = context.openFileInput(fileName);
-            if (inputStream != null) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 }

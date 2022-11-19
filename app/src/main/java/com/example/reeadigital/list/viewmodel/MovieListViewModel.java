@@ -6,20 +6,19 @@ import androidx.lifecycle.ViewModel;
 import com.example.reeadigital.list.model.Movie;
 
 import java.util.List;
-
+/** Simple view model for movie list view*/
 public class MovieListViewModel extends ViewModel {
-    Repository repository;
-
+    MovieListRepository movieListRepository;
 
     public MovieListViewModel() {
-        repository = new Repository();
+        movieListRepository = new MovieListRepository();
     }
 
     public void fetchMovieList(String language) {
-        repository.requestMovieListData(language);
+        movieListRepository.requestMovieListData(language);
     }
 
     public MutableLiveData<List<Movie>> getAvailableMovieList() {
-        return repository.getAllMovieListData();
+        return movieListRepository.getAllMovieListData();
     }
 }
