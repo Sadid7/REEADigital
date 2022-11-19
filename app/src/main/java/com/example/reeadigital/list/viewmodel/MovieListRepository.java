@@ -1,17 +1,13 @@
 package com.example.reeadigital.list.viewmodel;
 
 import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
-
 import com.example.reeadigital.Utils;
 import com.example.reeadigital.api.RetrofitClientInstance;
 import com.example.reeadigital.api.GetMovieLIstService;
 import com.example.reeadigital.list.model.Movie;
 import com.example.reeadigital.list.model.MovieApiResponse;
-
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

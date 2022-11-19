@@ -5,9 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.ConnectivityManager;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 /** Simple utility class with dialogs, ids, keys etc*/
 public class Utils {
     public final static String MOVIE_LIST_API_KEY = "15673ce2e17445aae3ae809f818eb6a3";
