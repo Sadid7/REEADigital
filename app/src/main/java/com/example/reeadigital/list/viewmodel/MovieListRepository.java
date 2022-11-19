@@ -13,16 +13,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MovieListRepository implements Callback<MovieApiResponse>{
-    MutableLiveData<List<Movie>> allMovieListData;
     MovieApiResponse currentMovieApiResponse;
+    MovieListApiListener movieListApiListener;
     int currentPageNo;
-
-    public MovieListRepository() {
-        this.allMovieListData = new MutableLiveData<>();
+    public MovieListRepository(MovieListApiListener movieListApiListener) {
         this.currentMovieApiResponse = new MovieApiResponse();
         this.currentPageNo = 0;
+        this.movieListApiListener = movieListApiListener;
     }
-
     public void requestMovieListData(String language) {
         if (currentPageNo == 0) {
             currentPageNo++;
@@ -40,39 +38,19 @@ public class MovieListRepository implements Callback<MovieApiResponse>{
                 language,pageNo);
         call.enqueue(this);
     }
-
-    public MutableLiveData<List<Movie>> getAllMovieListData() {
-        return allMovieListData;
-    }
-
     public Integer getTotalPageNo() {
         if (currentMovieApiResponse.getTotalPages() != null) {
             return currentMovieApiResponse.getTotalPages();
         } else return 0;
-
     }
-
     @Override
     public void onResponse(Call<MovieApiResponse> call, Response<MovieApiResponse> response) {
         //sets latest api response as currentMovieApiResponse
         currentMovieApiResponse = response.body();
-        if (allMovieListData.getValue() == null) {
-            //initial addition to movie list
-            allMovieListData.postValue(response.body().getMovieList());
-        } else {
-            //append new movie list data with earliar movie data
-           appendMovieListData(response.body().getMovieList());
-        }
+        movieListApiListener.onMovieListRetrieved(response.body().getMovieList());
     }
-
     @Override
     public void onFailure(Call<MovieApiResponse> call, Throwable t) {
         Log.e("MovieListRepository", t.getLocalizedMessage());
-    }
-
-    private void appendMovieListData(List<Movie> movieList) {
-        List<Movie> movies = allMovieListData.getValue();
-        movies.addAll(movieList);
-        allMovieListData.postValue(movies);
     }
 }
