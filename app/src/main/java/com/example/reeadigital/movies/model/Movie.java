@@ -1,4 +1,4 @@
-package com.example.reeadigital.list.model;
+package com.example.reeadigital.movies.model;
 
 import com.google.gson.annotations.SerializedName;
 /**Simple POJO class based on the api response*/

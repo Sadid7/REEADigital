@@ -1,4 +1,4 @@
-package com.example.reeadigital.list.adapter;
+package com.example.reeadigital.movies.viewadapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.example.reeadigital.R;
-import com.example.reeadigital.list.model.Movie;
+import com.example.reeadigital.movies.model.Movie;
 import java.util.List;
 /**Simple adapter for movie list view*/
 public class MovieListViewAdapter extends BaseAdapter {

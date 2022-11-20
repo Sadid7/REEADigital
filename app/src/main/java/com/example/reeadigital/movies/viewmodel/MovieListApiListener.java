@@ -1,6 +1,6 @@
-package com.example.reeadigital.list.viewmodel;
+package com.example.reeadigital.movies.viewmodel;
 
-import com.example.reeadigital.list.model.Movie;
+import com.example.reeadigital.movies.model.Movie;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.example.reeadigital.api;
 
-import com.example.reeadigital.list.model.MovieApiResponse;
+import com.example.reeadigital.movies.model.MovieApiResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

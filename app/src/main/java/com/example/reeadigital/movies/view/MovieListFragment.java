@@ -1,4 +1,4 @@
-package com.example.reeadigital.list.view;
+package com.example.reeadigital.movies.view;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -16,9 +16,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.reeadigital.R;
 import com.example.reeadigital.Utils;
-import com.example.reeadigital.list.adapter.MovieListViewAdapter;
-import com.example.reeadigital.list.viewmodel.MovieListViewModel;
-import com.example.reeadigital.list.model.Movie;
+import com.example.reeadigital.movies.viewadapter.MovieListViewAdapter;
+import com.example.reeadigital.movies.viewmodel.MovieListViewModel;
+import com.example.reeadigital.movies.model.Movie;
 
 import java.util.List;
 /**Simple fragment view fetches movie list from online and shows it on a listview*/

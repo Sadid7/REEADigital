@@ -1,8 +1,10 @@
-package com.example.reeadigital.list.viewmodel;
+package com.example.reeadigital.movies.viewmodel;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import com.example.reeadigital.list.model.Movie;
+
+import com.example.reeadigital.movies.data.MovieListRepository;
+import com.example.reeadigital.movies.model.Movie;
 import java.util.List;
 /** Simple view model for movie list view*/
 public class MovieListViewModel extends ViewModel implements MovieListApiListener{
