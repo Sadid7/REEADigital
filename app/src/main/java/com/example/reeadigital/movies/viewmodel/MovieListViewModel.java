@@ -16,8 +16,8 @@ public class MovieListViewModel extends ViewModel implements MovieListApiListene
         this.allMovieListData = new MutableLiveData<>();
     }
 
-    public void fetchMovieList(String language) {
-        movieListRepository.requestMovieListData(language);
+    public void fetchMovieListData(String language) {
+        movieListRepository.makeMovieListDataRequest(language);
     }
     public MutableLiveData<List<Movie>> getAvailableMovieList() {
         return allMovieListData;

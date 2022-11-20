@@ -24,7 +24,7 @@ public class MovieListRepository implements Callback<MovieApiResponse>{
      *enqueues api calls until all the pages data is retireved
      *through listview scroll
      *ignores all the other requests if all the pages are retrieved */
-    public void requestMovieListData(String language) {
+    public void makeMovieListDataRequest(String language) {
         if (currentMovieApiResponse == null) {
             enqueueMovieListDataRequest(language,Integer.toString(Utils.INITIAL_PAGE_NO));
         } else if ( currentMovieApiResponse.getPageNo() <= getTotalPageNo()) {

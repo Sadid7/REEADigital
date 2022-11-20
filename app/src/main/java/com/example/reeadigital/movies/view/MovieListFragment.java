@@ -63,7 +63,7 @@ public class MovieListFragment extends Fragment implements AbsListView.OnScrollL
      * otherwise shows error dialog*/
     private void fetchOnlineData() {
         if (Utils.isInternetAvailable(getContext())) {
-            movieListViewModel.fetchMovieList(getResources().getConfiguration().locale.toString());
+            movieListViewModel.fetchMovieListData(getResources().getConfiguration().locale.toString());
         } else {
             AlertDialog alertDialog = Utils.showErrorDialog(getContext(),
                     getString(R.string.no_internet_message),
