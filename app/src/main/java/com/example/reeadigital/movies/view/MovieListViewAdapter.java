@@ -1,4 +1,4 @@
-package com.example.reeadigital.movies.viewadapter;
+package com.example.reeadigital.movies.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;

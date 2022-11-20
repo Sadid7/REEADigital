@@ -16,7 +16,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.reeadigital.R;
 import com.example.reeadigital.Utils;
-import com.example.reeadigital.movies.viewadapter.MovieListViewAdapter;
 import com.example.reeadigital.movies.viewmodel.MovieListViewModel;
 import com.example.reeadigital.movies.model.Movie;
 
